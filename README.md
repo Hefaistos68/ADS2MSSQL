@@ -15,8 +15,6 @@ Azure Data Studio typically stores connection profiles separately (e.g., in a `U
 
 Passwords are not migrated (they are not stored in plain JSON). Users will be prompted by the `ms-mssql` extension on first connect if required.
 
-If the `ms-mssql` extension does not expose the assumed API methods, the import will fail. In that case you'll need to inspect the real exported API surface of `ms-mssql` or file a feature request.
-
 ## Configuration
 
 - `ads2mssql.azureDataStudioSettingsPath`: Override ADS `settings.json` path.
