@@ -1,0 +1,101 @@
+{
+  "name": "ads2mssql-importer",
+  "displayName": "ADS to MSSQL Connection Importer",
+  "description": "Import Azure Data Studio saved MSSQL connection profiles into the VS Code ms-mssql extension.",
+  "version": "0.0.1",
+  "publisher": "your-publisher-id",
+  "license": "MIT",
+  "icon": "resources/icon.png",
+  "repository": { "type": "git", "url": "https://github.com/your-org/ads2mssql-importer.git" },
+  "bugs": { "url": "https://github.com/your-org/ads2mssql-importer/issues" },
+  "homepage": "https://github.com/your-org/ads2mssql-importer#readme",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other", "Data Science"],
+  "keywords": ["sql", "mssql", "azure data studio", "import", "migration"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "extensionDependencies": [
+    "ms-mssql.mssql"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ads2mssql.importConnections",
+        "title": "Import Azure Data Studio MSSQL Connections",
+        "category": "ADS2MSSQL"
+      },
+      {
+        "command": "ads2mssql.hello",
+        "title": "ADS2MSSQL: Hello (Diagnostics)",
+        "category": "ADS2MSSQL"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        { "command": "ads2mssql.importConnections", "when": "true" },
+        { "command": "ads2mssql.hello", "when": "true" }
+      ]
+    },
+    "configuration": {
+      "title": "ADS to MSSQL Importer",
+      "properties": {
+        "ads2mssql.azureDataStudioSettingsPath": {
+          "type": "string",
+            "default": "",
+            "description": "Optional override path to Azure Data Studio settings.json (leave blank for auto-detect)."
+        },
+        "ads2mssql.skipDuplicates": {
+          "type": "boolean",
+          "default": true,
+          "description": "Skip importing a connection if an equivalent (server+database+user) already exists."
+        },
+        "ads2mssql.importGroups": {
+          "type": "boolean",
+          "default": true,
+          "description": "Attempt to import Azure Data Studio connection groups and apply them to imported connections."
+        },
+        "ads2mssql.createGroupsInTarget": {
+          "type": "boolean",
+          "default": true,
+          "description": "Create missing groups inside the target ms-mssql extension before adding connections (if API allows)."
+        },
+        "ads2mssql.debugLogging": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable verbose debug logging to the ADS2MSSQL output channel during import."
+        },
+        "ads2mssql.writeMode": {
+          "type": "string",
+          "enum": ["settings"],
+          "default": "settings",
+          "description": "Where to write imported connections: currently only 'settings' (updates mssql.connections in user settings)."
+        },
+        "ads2mssql.writeGroups": {
+          "type": "boolean",
+          "default": true,
+          "description": "Persist group hierarchy into mssql.connectionGroups (settings writeMode)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -w -p ./",
+    "package": "vsce package",
+    "lint": "echo 'No linter configured'",
+    "test": "echo 'No tests yet'"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "jsonc-parser": "^3.2.1"
+  }
+}
